@@ -40,11 +40,18 @@ export const products: Product[] = [
   {
     id: "p-facial-002",
     slug: "rechargeable-facial-hair-remover-women-2-in-1-gold",
-    name: "Rechargeable Facial Hair Remover for Women (2-in-1, Gold)",
+    name: "Rechargeable Facial Hair Remover for Women: 2 in 1 Electric Eyebrow and Facial Hair Remover - Suitable for Middle-aged Women's Eyebrow, Chin, and Cheek Trimming - with Built-in LED Light (Gold)",
     price: 74714,
     category: "facial",
     images: [
-      "https://images.unsplash.com/photo-1611930022073-b7a4ba5fcc4f?q=80&w=1400&auto=format&fit=crop"
+      "https://m.media-amazon.com/images/I/71cPSM+DgcL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/71UwR-mvKBL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/71CElco2HLL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/61iI9I1qwUL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/612crzDBLxL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/61CFcnWe9qL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/61DU4jMhhTL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/71yNDgVT4vL._AC_SL1500_.jpg"
     ],
     shortDescription: "2-in-1 facial hair remover and eyebrow trimmer with LED light.",
     description:
@@ -58,11 +65,16 @@ export const products: Product[] = [
   {
     id: "p-epl-001",
     slug: "beroza-ipl-laser-hair-removal-999999-flash-white",
-    name: "BEROZA Laser Hair Removal Device (IPL, 999,999 Flash)",
+    name: "BEROZA Laser hair removal device, 999,999 flash permanent hair removal device, IPL freezing point painless hair removal, unisex stimulation hair removal device. (White)",
     price: 65968,
     category: "epl",
     images: [
-      "https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1400&auto=format&fit=crop"
+      "https://m.media-amazon.com/images/I/61XyrZp7wAL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/61eCxIp2rcL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/61oCGgXFAWL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/61a2KJlCDyL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/71NBFHMiA+L._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/61Ez2Vp3AIL._AC_SL1500_.jpg"
     ],
     shortDescription: "IPL device with cooling system, 5 energy levels, 2 flash modes.",
     description:
@@ -76,11 +88,18 @@ export const products: Product[] = [
   {
     id: "p-facial-003",
     slug: "braun-face-mini-hair-remover-fs1000",
-    name: "Braun Face Mini Hair Remover FS1000",
+    name: "Braun Face Mini Hair Remover FS1000, Electric Facial Hair Removal for Women",
     price: 76832,
     category: "facial",
     images: [
-      "https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1400&auto=format&fit=crop"
+      "https://m.media-amazon.com/images/I/71wh0LwjU-L._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/617wPBFAYyL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/81XIMBd4y3L._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/81URtG2Zk3L._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/71hniUZAsoL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/61SFo1zusZL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/61xro+RQLpL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/81wGkV11URL._AC_SL1500_.jpg"
     ],
     shortDescription: "Electric facial hair removal for women—smooth, gentle, and precise.",
     description:

@@ -1,12 +1,13 @@
 import ProductCard from "@/components/ProductCard";
 import { products } from "@/lib/data/products";
 
-export default function ProductsPage({
+export default async function ProductsPage({
   searchParams,
 }: {
-  searchParams: { category?: string };
+  searchParams: Promise<{ category?: string }>;
 }) {
-  const category = searchParams?.category;
+  const resolvedSearchParams = await searchParams;
+  const category = resolvedSearchParams?.category;
   const filtered = category ? products.filter((p) => p.category === category) : products;
   return (
     <main className="mx-auto max-w-6xl px-4 py-10">
