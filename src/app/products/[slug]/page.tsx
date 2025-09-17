@@ -1,0 +1,90 @@
+"use client";
+
+import { products, formatPrice } from "@/lib/data/products";
+import { useMemo, useState } from "react";
+import { notFound, useParams } from "next/navigation";
+import { useCart } from "@/lib/cart";
+
+export default function ProductDetailPage() {
+  const params = useParams<{ slug: string }>();
+  const product = useMemo(() => products.find((p) => p.slug === params.slug), [params.slug]);
+  const { addItem } = useCart();
+  const [active, setActive] = useState(0);
+
+  if (!product) return notFound();
+
+  const activeSrc = product.images?.[active] || "";
+  const isDirectImage = /\.(jpg|jpeg|png|webp|gif|svg)(\?.*)?$/i.test(activeSrc);
+
+  return (
+    <main className="mx-auto max-w-6xl px-4 py-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div>
+        <div className="aspect-[4/3] overflow-hidden rounded-lg border">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {isDirectImage ? (
+            <img src={activeSrc} alt={product.name} className="h-full w-full object-cover" />
+          ) : (
+            <div className="h-full w-full flex items-center justify-center bg-muted text-muted-foreground">
+              Image preview unavailable
+            </div>
+          )}
+        </div>
+        <div className="mt-3 grid grid-cols-4 gap-2">
+          {product.images.map((src, i) => {
+            const thumbIsImage = /\.(jpg|jpeg|png|webp|gif|svg)(\?.*)?$/i.test(src);
+            return thumbIsImage ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={src}
+                src={src}
+                alt={product.name + " thumbnail " + i}
+                className={`h-20 w-full object-cover rounded border cursor-pointer ${i === active ? "ring-2 ring-foreground" : ""}`}
+                onClick={() => setActive(i)}
+              />
+            ) : (
+              <div
+                key={src}
+                className={`h-20 w-full rounded border cursor-pointer flex items-center justify-center text-xs text-muted-foreground bg-muted ${i === active ? "ring-2 ring-foreground" : ""}`}
+                onClick={() => setActive(i)}
+              >
+                No preview
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div>
+        <div className="flex items-start justify-between gap-4">
+          <h1 className="text-2xl font-semibold flex-1">{product.name}</h1>
+        </div>
+        <div className="text-lg mt-2">{formatPrice(product.price)}</div>
+        <p className="text-muted-foreground mt-4">{product.shortDescription}</p>
+
+        <button
+          className="mt-6 inline-flex items-center justify-center rounded-md bg-foreground text-background px-4 py-2 hover:opacity-90"
+          onClick={() => addItem(product, 1)}
+        >
+          Add to cart
+        </button>
+
+        <div className="mt-8">
+          <h2 className="font-medium">Specifications</h2>
+          <dl className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+            {product.specs.map((s) => (
+              <div key={s.label} className="border rounded p-3 bg-card">
+                <dt className="text-xs text-muted-foreground">{s.label}</dt>
+                <dd className="text-sm">{s.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div className="mt-8">
+          <h2 className="font-medium">Description</h2>
+          <p className="mt-2 text-sm leading-6 text-foreground/80">{product.description}</p>
+        </div>
+      </div>
+    </main>
+  );
+}
