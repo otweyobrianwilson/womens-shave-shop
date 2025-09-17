@@ -10,6 +10,26 @@ import { ServiceWorkerRegistrar } from "@/components/ServiceWorkerRegistrar";
 export const metadata: Metadata = {
   title: "yourduuka — Hair & Beauty Devices",
   description: "Shop at-home EPL and facial hair removal devices. Gentle, effective, and designed for silky smooth confidence.",
+  keywords: "hair removal, EPL devices, facial hair remover, women's beauty, smooth skin, at-home beauty",
+  authors: [{ name: "yourduuka" }],
+  creator: "yourduuka",
+  publisher: "yourduuka",
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/logo.svg',
+  },
+  openGraph: {
+    title: "yourduuka — Hair & Beauty Devices",
+    description: "Shop premium EPL and facial hair removal devices for silky smooth confidence",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "yourduuka — Hair & Beauty Devices",
+    description: "Shop premium EPL and facial hair removal devices for silky smooth confidence",
+  },
 };
 
 export default function RootLayout({
