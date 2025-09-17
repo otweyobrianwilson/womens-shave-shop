@@ -11,7 +11,7 @@ export default function Header() {
       <div className="mx-auto max-w-6xl px-4 py-3 flex items-center gap-4">
         <Link href="/" className="flex items-center gap-2 font-semibold text-lg hover:opacity-80 transition-opacity">
           <Image 
-            src="/logo.svg" 
+            src="/logo.png" 
             alt="yourduuka logo" 
             width={140} 
             height={42}

@@ -65,7 +65,7 @@ export default function HomePage() {
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
           <Link href="/products?category=epl" className="group relative overflow-hidden rounded-lg border">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcc4f?q=80&w=1400&auto=format&fit=crop" alt="EPL devices" className="h-64 w-full object-cover group-hover:scale-[1.02] transition" />
+            <img src="https://m.media-amazon.com/images/I/61XyrZp7wAL._AC_SL1500_.jpg" alt="EPL devices" className="h-64 w-full object-cover group-hover:scale-[1.02] transition" />
             <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
             <div className="absolute bottom-4 left-4 font-medium">EPL Devices</div>
           </Link>
