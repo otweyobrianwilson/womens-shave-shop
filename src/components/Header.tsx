@@ -11,7 +11,7 @@ export default function Header() {
       <div className="mx-auto max-w-6xl px-4 py-3 flex items-center gap-4">
         <Link href="/" className="flex items-center gap-2 font-semibold text-lg hover:opacity-80 transition-opacity">
           <Image 
-            src="/logo.png" 
+            src="https://cdn.dribbble.com/userupload/17039932/file/original-983633d1f6de58f5d871f174ff34f057.jpg?format=webp&resize=1000x750&vertical=center" 
             alt="yourduuka logo" 
             width={140} 
             height={42}
