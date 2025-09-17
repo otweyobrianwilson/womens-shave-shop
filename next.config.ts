@@ -8,6 +8,22 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'cdn.dribbble.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'sc04.alicdn.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'm.media-amazon.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
         hostname: '**',
       },
       {
@@ -16,7 +32,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  outputFileTracingRoot: path.resolve(__dirname, '../../'),
   turbopack: {
     rules: {
       "*.{jsx,tsx}": {
