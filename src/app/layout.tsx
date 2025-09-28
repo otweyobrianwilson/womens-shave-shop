@@ -6,6 +6,7 @@ import Script from "next/script";
 import { CartProvider } from "@/lib/cart";
 import Header from "@/components/Header";
 import { ServiceWorkerRegistrar } from "@/components/ServiceWorkerRegistrar";
+import { ToastProvider } from "@/contexts/ToastContext";
 
 export const metadata: Metadata = {
   title: "yourduuka — Hair & Beauty Devices",
@@ -51,12 +52,14 @@ export default function RootLayout({
           data-debug="true"
           data-custom-data='{"appName": "YourApp", "version": "1.0.0", "greeting": "hi"}'
         />
-        <CartProvider>
-          <Header />
-          {/* Register SW for local cart & orders storage */}
-          <ServiceWorkerRegistrar />
-          {children}
-        </CartProvider>
+        <ToastProvider>
+          <CartProvider>
+            <Header />
+            {/* Register SW for local cart & orders storage */}
+            <ServiceWorkerRegistrar />
+            {children}
+          </CartProvider>
+        </ToastProvider>
         <VisualEditsMessenger />
       </body>
     </html>

@@ -5,13 +5,30 @@ import { useMemo } from "react";
 import { notFound, useParams } from "next/navigation";
 import { useCart } from "@/lib/cart";
 import ImageGallery from "@/components/ImageGallery";
+import { useToast } from "@/contexts/ToastContext";
 
 export default function ProductDetailPage() {
   const params = useParams<{ slug: string }>();
   const product = useMemo(() => products.find((p) => p.slug === params.slug), [params.slug]);
   const { addItem } = useCart();
+  const { success, error } = useToast();
 
   if (!product) return notFound();
+
+  const handleAddToCart = () => {
+    try {
+      addItem(product, 1);
+      success(
+        "Added to cart!",
+        `${product.name} has been added to your cart.`
+      );
+    } catch (err) {
+      error(
+        "Failed to add to cart",
+        "Please try again."
+      );
+    }
+  };
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -30,8 +47,8 @@ export default function ProductDetailPage() {
         <p className="text-muted-foreground mt-4">{product.shortDescription}</p>
 
         <button
-          className="mt-6 inline-flex items-center justify-center rounded-md bg-foreground text-background px-4 py-2 hover:opacity-90"
-          onClick={() => addItem(product, 1)}
+          className="mt-6 inline-flex items-center justify-center rounded-md bg-foreground text-background px-4 py-2 hover:opacity-90 transition-opacity"
+          onClick={handleAddToCart}
         >
           Add to cart
         </button>

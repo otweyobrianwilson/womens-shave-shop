@@ -5,11 +5,13 @@ import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/data/products";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/contexts/ToastContext";
 
 export default function CheckoutPage() {
   const { items, subtotal, clear } = useCart();
   const [processing, setProcessing] = useState(false);
   const [message, setMessage] = useState<string>("");
+  const [paymentMethod, setPaymentMethod] = useState<'mobile_money' | 'cash_on_delivery'>('mobile_money');
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -18,17 +20,66 @@ export default function CheckoutPage() {
     landmark: "",
   });
   const router = useRouter();
+  const { success, error, info } = useToast();
 
   const validUGPhone = /^\+256\d{9}$/; // e.g. +2567XXXXXXXX
+
+  const handleMobileMoneyPayment = async () => {
+    try {
+      info("Processing payment...", "Please wait while we initiate your mobile money payment.");
+      
+      const tx_ref = `yourduuka-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      
+      const response = await fetch('/api/flutterwave', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          phone_number: form.phone.replace('+', ''),
+          amount: subtotal,
+          email: form.email,
+          customer_name: form.name,
+          tx_ref: tx_ref,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        success(
+          "Payment initiated!", 
+          "Please complete the payment on your mobile device. You will be redirected shortly."
+        );
+        // Redirect to Flutterwave payment page
+        if (data.redirect_url) {
+          setTimeout(() => {
+            window.location.href = data.redirect_url;
+          }, 2000);
+        }
+      } else {
+        throw new Error(data.error || 'Payment initiation failed');
+      }
+    } catch (err: any) {
+      error("Payment failed", err.message || "Unable to process mobile money payment. Please try again.");
+    }
+  };
 
   const onPay = async () => {
     setMessage("");
     if (!validUGPhone.test(form.phone)) {
       setMessage("Enter a valid Ugandan phone number in +256 format (e.g., +2567XXXXXXXX)");
+      error("Invalid phone number", "Please enter a valid Ugandan phone number");
       return;
     }
     if (!form.name || !form.email || !form.district || !form.landmark) {
       setMessage("Please fill in all required fields");
+      error("Missing information", "Please fill in all required fields");
+      return;
+    }
+    
+    if (paymentMethod === 'mobile_money') {
+      await handleMobileMoneyPayment();
       return;
     }
 
@@ -77,6 +128,7 @@ export default function CheckoutPage() {
       } catch {}
 
       clear();
+      success("Order placed!", "Your order has been placed successfully. You will receive a confirmation shortly.");
       router.push("/success");
     } catch (e) {
       setMessage("Checkout failed. Please try again.");
@@ -130,6 +182,41 @@ export default function CheckoutPage() {
             onChange={(e) => setForm((f) => ({ ...f, landmark: e.target.value }))}
           />
         </form>
+        
+        {/* Payment Method Selection */}
+        <div className="mt-6">
+          <h3 className="font-medium mb-3">Payment Method</h3>
+          <div className="space-y-3">
+            <label className="flex items-center space-x-3 cursor-pointer">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="mobile_money"
+                checked={paymentMethod === 'mobile_money'}
+                onChange={(e) => setPaymentMethod(e.target.value as 'mobile_money')}
+                className="text-blue-600"
+              />
+              <div>
+                <div className="font-medium text-sm">Uganda Mobile Money</div>
+                <div className="text-xs text-muted-foreground">Pay with MTN Money or Airtel Money</div>
+              </div>
+            </label>
+            <label className="flex items-center space-x-3 cursor-pointer">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="cash_on_delivery"
+                checked={paymentMethod === 'cash_on_delivery'}
+                onChange={(e) => setPaymentMethod(e.target.value as 'cash_on_delivery')}
+                className="text-blue-600"
+              />
+              <div>
+                <div className="font-medium text-sm">Cash on Delivery</div>
+                <div className="text-xs text-muted-foreground">Pay when your order is delivered</div>
+              </div>
+            </label>
+          </div>
+        </div>
       </section>
 
       <aside className="h-fit rounded-lg border p-4">
@@ -153,7 +240,7 @@ export default function CheckoutPage() {
           onClick={onPay}
           className="mt-4 inline-flex w-full items-center justify-center rounded-md bg-foreground text-background px-4 py-2 hover:opacity-90 disabled:opacity-60"
         >
-          {processing ? "Processing..." : "Place order"}
+          {processing ? "Processing..." : paymentMethod === 'mobile_money' ? "Pay with Mobile Money" : "Place Order"}
         </button>
         <p className="text-xs text-muted-foreground mt-2">No account required. Your order is saved securely on this device.</p>
         <Link className="mt-3 inline-block text-sm underline" href="/cart">Back to cart</Link>

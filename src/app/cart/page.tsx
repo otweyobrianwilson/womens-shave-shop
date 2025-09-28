@@ -3,11 +3,25 @@
 import Link from "next/link";
 import { useCart } from "@/lib/cart";
 import { formatPrice, products } from "@/lib/data/products";
+import { useToast } from "@/contexts/ToastContext";
 
 export default function CartPage() {
   const { items, updateQty, removeItem, subtotal, clear } = useCart();
+  const { success, info } = useToast();
 
   const getProduct = (id: string) => products.find((p) => p.id === id);
+
+  const handleRemoveItem = (productId: string, productName: string) => {
+    removeItem(productId);
+    success("Item removed", `${productName} has been removed from your cart.`);
+  };
+
+  const handleClearCart = () => {
+    if (items.length > 0) {
+      clear();
+      info("Cart cleared", "All items have been removed from your cart.");
+    }
+  };
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10">
@@ -38,13 +52,13 @@ export default function CartPage() {
                         onChange={(e) => updateQty(i.productId, Math.max(1, Number(e.target.value)))}
                         className="w-16 rounded border bg-background px-2 py-1"
                       />
-                      <button className="ml-auto text-red-600 hover:underline" onClick={() => removeItem(i.productId)}>Remove</button>
+                      <button className="ml-auto text-red-600 hover:underline" onClick={() => handleRemoveItem(i.productId, i.name)}>Remove</button>
                     </div>
                   </div>
                 </div>
               );
             })}
-            <button className="text-sm underline text-muted-foreground" onClick={clear}>Clear cart</button>
+            <button className="text-sm underline text-muted-foreground" onClick={handleClearCart}>Clear cart</button>
           </div>
 
           <aside className="rounded-lg border p-4 h-fit">
