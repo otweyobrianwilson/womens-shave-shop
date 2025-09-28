@@ -7,6 +7,7 @@ import { CartProvider } from "@/lib/cart";
 import Header from "@/components/Header";
 import { ServiceWorkerRegistrar } from "@/components/ServiceWorkerRegistrar";
 import { ToastProvider } from "@/contexts/ToastContext";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "yourduuka — Hair & Beauty Devices",
@@ -60,6 +61,7 @@ export default function RootLayout({
             {children}
           </CartProvider>
         </ToastProvider>
+        <Analytics />
         <VisualEditsMessenger />
       </body>
     </html>
