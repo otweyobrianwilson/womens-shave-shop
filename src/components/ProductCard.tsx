@@ -11,13 +11,13 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <div className="group rounded-lg border bg-card hover:shadow-md transition overflow-hidden">
       <Link href={`/products/${product.slug}`} className="block">
-        <div className="relative aspect-[4/3]">
+        <div className="relative aspect-[4/3] bg-white">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           {isDirectImage ? (
             <img
               src={img0}
               alt={product.name}
-              className="h-full w-full object-cover"
+              className="h-full w-full object-contain object-center p-2"
               loading="lazy"
             />
           ) : (

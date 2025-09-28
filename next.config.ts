@@ -31,14 +31,15 @@ const nextConfig: NextConfig = {
         hostname: '**',
       },
     ],
-  },
-  turbopack: {
-    rules: {
-      "*.{jsx,tsx}": {
-        loaders: [LOADER]
-      }
-    }
   }
+  // Temporarily disabled turbopack to fix build issues
+  // turbopack: {
+  //   rules: {
+  //     "*.{jsx,tsx}": {
+  //       loaders: [LOADER]
+  //     }
+  //   }
+  // }
 };
 
 export default nextConfig;
