@@ -78,11 +78,18 @@ export default function CheckoutPage() {
       return;
     }
     
-    if (paymentMethod === 'mobile_money') {
-      await handleMobileMoneyPayment();
+    // Force Mobile Money payment - Cash on Delivery is disabled
+    if (paymentMethod !== 'mobile_money') {
+      setMessage("Mobile Money payment is required. Cash on Delivery is currently unavailable.");
+      error("Payment method unavailable", "Please use Mobile Money payment to complete your order.");
       return;
     }
+    
+    await handleMobileMoneyPayment();
+    return;
 
+    // Legacy cash on delivery code (disabled)
+    /*
     try {
       setProcessing(true);
       const customer = {
@@ -135,6 +142,7 @@ export default function CheckoutPage() {
     } finally {
       setProcessing(false);
     }
+    */
   };
 
   return (
@@ -201,18 +209,18 @@ export default function CheckoutPage() {
                 <div className="text-xs text-muted-foreground">Pay with MTN Money or Airtel Money</div>
               </div>
             </label>
-            <label className="flex items-center space-x-3 cursor-pointer">
+            <label className="flex items-center space-x-3 cursor-not-allowed opacity-50">
               <input
                 type="radio"
                 name="paymentMethod"
                 value="cash_on_delivery"
-                checked={paymentMethod === 'cash_on_delivery'}
-                onChange={(e) => setPaymentMethod(e.target.value as 'cash_on_delivery')}
-                className="text-blue-600"
+                checked={false}
+                disabled={true}
+                className="text-gray-400 cursor-not-allowed"
               />
               <div>
-                <div className="font-medium text-sm">Cash on Delivery</div>
-                <div className="text-xs text-muted-foreground">Pay when your order is delivered</div>
+                <div className="font-medium text-sm text-gray-500">Cash on Delivery</div>
+                <div className="text-xs text-muted-foreground">Currently unavailable - Mobile Money payments only</div>
               </div>
             </label>
           </div>
@@ -240,7 +248,7 @@ export default function CheckoutPage() {
           onClick={onPay}
           className="mt-4 inline-flex w-full items-center justify-center rounded-md bg-foreground text-background px-4 py-2 hover:opacity-90 disabled:opacity-60"
         >
-          {processing ? "Processing..." : paymentMethod === 'mobile_money' ? "Pay with Mobile Money" : "Place Order"}
+          {processing ? "Processing..." : "Pay with Mobile Money"}
         </button>
         <p className="text-xs text-muted-foreground mt-2">No account required. Your order is saved securely on this device.</p>
         <Link className="mt-3 inline-block text-sm underline" href="/cart">Back to cart</Link>
